@@ -6,14 +6,15 @@ class HomeRouteWindow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 10, left: 10, top: 10),
+      padding: const EdgeInsets.all(10),
       child: Hero(
         tag: "park_card_hero_animation",
-        child: Card(
-          shape: RoundedRectangleBorder(
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.background,
             borderRadius: BorderRadius.circular(20),
-            side: BorderSide(
-              width: 5,
+            border: Border.all(
+              width: 2,
               color: Theme.of(context).colorScheme.primaryContainer,
             ),
           ),

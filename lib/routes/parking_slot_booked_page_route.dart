@@ -123,17 +123,20 @@ class _CustomProgressBarState extends State<_CustomProgressBar> {
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
-      setState(() {
-        if (progressValue < 1.0) {
-          progressValue += 0.1;
-        } else {
-          Get.offAll(
-            () => const HomePage(),
-          );
-        }
-      });
-    });
+    timer = Timer.periodic(
+      const Duration(milliseconds: 500),
+      (timer) {
+        setState(() {
+          if (progressValue < 1.0) {
+            progressValue += 0.1;
+          } else {
+            Get.offAll(
+              () => const HomePage(),
+            );
+          }
+        });
+      },
+    );
   }
 
   @override

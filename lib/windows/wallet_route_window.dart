@@ -20,7 +20,7 @@ class _WalletRouteWindowState extends State<WalletRouteWindow> {
 
   @override
   Widget build(BuildContext context) {
-    double? deviceWidth = MediaQuery.of(context).size.width - 100;
+    double? deviceWidth = MediaQuery.of(context).size.width - 200;
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Hero(
@@ -28,8 +28,12 @@ class _WalletRouteWindowState extends State<WalletRouteWindow> {
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primaryContainer,
+            color: Theme.of(context).colorScheme.background,
             borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              width: 2,
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,8 +113,8 @@ class _WalletRouteWindowState extends State<WalletRouteWindow> {
                         width: deviceWidth,
                         child: CircularProgressIndicator(
                           strokeCap: StrokeCap.round,
-                          value: 1,
-                          strokeWidth: 15,
+                          value: walletMoney / perHourRate,
+                          strokeWidth: 10,
                           color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
