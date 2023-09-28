@@ -19,6 +19,7 @@ class _HomePageState extends State<HomePage> {
     const HomeRouteWindow(),
     const WalletRouteWindow(),
   ];
+
   final PageController _pageController = PageController();
   bool isWalletSelected = false;
   static const _fabIconSize = 20.0;
