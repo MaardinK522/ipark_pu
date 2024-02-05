@@ -36,7 +36,7 @@ class ParkingSlotBookedPageRoute extends StatelessWidget {
             ),
           ),
         ),
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         body: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: MediaQuery.of(context).size.width * 0.1,

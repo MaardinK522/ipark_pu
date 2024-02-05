@@ -29,6 +29,7 @@ class _AddMoneyPageRouteState extends State<AddMoneyPageRoute> {
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Hero(
           tag: "app_name_hero_animation",
           child: Material(
@@ -75,7 +76,7 @@ class _AddMoneyPageRouteState extends State<AddMoneyPageRoute> {
                                   Text(
                                     "WALLET MONEY : ",
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 15,
                                       color:
                                           Theme.of(context).colorScheme.primary,
                                     ),
@@ -83,7 +84,7 @@ class _AddMoneyPageRouteState extends State<AddMoneyPageRoute> {
                                   Text(
                                     "\u{20B9} $walletMoney",
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 15,
                                       color:
                                           Theme.of(context).colorScheme.primary,
                                     ),
@@ -94,7 +95,7 @@ class _AddMoneyPageRouteState extends State<AddMoneyPageRoute> {
                               Text(
                                 "CURRENT PARKING FAIR : ",
                                 style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 15,
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
                               ),
@@ -103,9 +104,9 @@ class _AddMoneyPageRouteState extends State<AddMoneyPageRoute> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "\u{20B9} $walletMoney",
+                                    "\u{20B9} 10",
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 15,
                                       color:
                                           Theme.of(context).colorScheme.primary,
                                     ),
@@ -199,12 +200,20 @@ class _AddMoneyPageRouteState extends State<AddMoneyPageRoute> {
                                         Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
-                                Text(
-                                  "\u{20B9} ${parkingPrices[selectedIndex]}",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
+                                AnimatedSwitcher(
+                                  duration: const Duration(milliseconds: 300),
+                                  transitionBuilder: (child, animation) =>
+                                      ScaleTransition(
+                                    scale: animation,
+                                    child: child,
+                                  ),
+                                  child: Text(
+                                    "\u{20B9} ${parkingPrices[selectedIndex]}",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -215,7 +224,7 @@ class _AddMoneyPageRouteState extends State<AddMoneyPageRoute> {
                               width: double.maxFinite,
                               child: PageView.builder(
                                 controller: PageController(
-                                  viewportFraction: 0.95,
+                                  viewportFraction: 0.875,
                                   initialPage: selectedIndex,
                                 ),
                                 itemCount: parkingPrices.length,
@@ -287,12 +296,12 @@ class _AddMoneyPageRouteState extends State<AddMoneyPageRoute> {
                               style: ButtonStyle(
                                 shape: MaterialStatePropertyAll(
                                   RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
                               ),
                               child: const Padding(
-                                padding: EdgeInsets.all(20),
+                                padding: EdgeInsets.all(10),
                                 child: Text(
                                   "NO",
                                   style: TextStyle(
@@ -305,7 +314,7 @@ class _AddMoneyPageRouteState extends State<AddMoneyPageRoute> {
                               style: ButtonStyle(
                                 shape: MaterialStatePropertyAll(
                                   RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
                               ),
@@ -368,7 +377,7 @@ class _AddMoneyPageRouteState extends State<AddMoneyPageRoute> {
                                 );
                               },
                               child: const Padding(
-                                padding: EdgeInsets.all(20),
+                                padding: EdgeInsets.all(10),
                                 child: Text(
                                   "YES",
                                   style: TextStyle(
@@ -393,7 +402,7 @@ class _AddMoneyPageRouteState extends State<AddMoneyPageRoute> {
                           children: [
                             Icon(
                               Icons.add_rounded,
-                              size: 25,
+                              size: 30,
                             ),
                             SizedBox(width: 10),
                             Text(

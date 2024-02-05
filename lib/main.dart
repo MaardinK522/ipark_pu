@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:ipark/routes/home_page_route.dart';
 import 'package:ipark/utils/bluetooth.dart';
+List<String> randomParkingSlots = List.empty(growable: true);
 
 void main() async {
   await GetStorage.init();
@@ -11,6 +11,10 @@ void main() async {
   if (walletMoney == null) {
     GetStorage().write('wallet_money', 0);
   }
+  randomParkingSlots.add("1 (Parked)");
+  randomParkingSlots.add("2 (Parked)");
+  randomParkingSlots.add("3");
+  randomParkingSlots.add("4 (Booked)");
   Bluetooth.scanAndConnectDevice();
   runApp(const MyApp());
 }

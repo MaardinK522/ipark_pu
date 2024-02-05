@@ -10,7 +10,7 @@ class HomeRouteWindow extends StatelessWidget {
       child: Hero(
         tag: "park_card_hero_animation",
         child: Container(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.background,
             borderRadius: BorderRadius.circular(20),
@@ -43,14 +43,7 @@ class HomeRouteWindow extends StatelessWidget {
                             size: 25,
                             color: Theme.of(context).colorScheme.primary,
                           ),
-                          SizedBox(
-                            height: 30,
-                            child: VerticalDivider(
-                              width: 20,
-                              thickness: 1,
-                              color: Theme.of(context).colorScheme.secondary,
-                            ),
-                          ),
+                          const SizedBox(width: 10),
                           Expanded(
                             child: Text(
                               "Parul University Waghodia, Waghodia",
@@ -63,10 +56,10 @@ class HomeRouteWindow extends StatelessWidget {
                           )
                         ],
                       ),
-                      const Divider(
-                        thickness: 2,
-                        color: Colors.grey,
-                        height: 40,
+                      Divider(
+                        thickness: 1,
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        height: 20,
                       ),
                       Text(
                         "Please book parking slot\nto show left parking time.",

@@ -26,14 +26,14 @@ class WalletMoneyPricePageViewItem extends StatelessWidget {
                 Text(
                   "PRICE : ",
                   style: TextStyle(
-                    fontSize: 30,
+                    fontSize: 25,
                     color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
                 Text(
                   "\u{20B9} $price",
                   style: TextStyle(
-                    fontSize: 30,
+                    fontSize: 25,
                     color: Theme.of(context).colorScheme.primary,
                   ),
                 ),

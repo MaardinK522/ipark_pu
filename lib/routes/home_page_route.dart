@@ -42,6 +42,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         elevation: 10,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         centerTitle: true,
         title: const Hero(
           tag: "app_name_hero_animation",
@@ -123,73 +124,84 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: SizedBox(
         height: 60,
-        child: Visibility(
-          visible: !isWalletSelected,
-          replacement: FloatingActionButton.extended(
-            isExtended: true,
-            heroTag: "fab_hero_money_animation",
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            backgroundColor: Theme.of(context).colorScheme.primary,
-            onPressed: () {
-              Get.to(
-                () => const AddMoneyPageRoute(),
-                transition: Transition.fadeIn,
-                curve: Curves.easeOut,
-                duration: const Duration(milliseconds: 500),
-                preventDuplicates: true,
-              );
-            },
-            label: const Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.add_rounded,
-                  size: _fabIconSize,
-                ),
-                SizedBox(width: 10),
-                Text(
-                  "MONEY",
-                  style: TextStyle(fontSize: _fabTextSize),
-                ),
-              ],
-            ),
+        child: AnimatedSwitcher(
+          transitionBuilder: (child, animation) => FadeTransition(
+            opacity: animation,
+            child: child,
           ),
-          child: Hero(
-            tag: "fab_hero_park_animation",
-            child: FloatingActionButton.extended(
-              isExtended: true,
-              heroTag: null,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              onPressed: () {
-                Get.to(
-                  () => const BookParkingPageRoute(),
-                  transition: Transition.fadeIn,
-                  curve: Curves.easeInOut,
-                  duration: const Duration(milliseconds: 500),
-                  preventDuplicates: true,
-                );
-              },
-              label: const Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.directions_car_filled_rounded,
-                    size: _fabIconSize,
+          duration: const Duration(milliseconds: 300),
+          child: !isWalletSelected
+              ? Hero(
+                  tag: "fab_hero_park_animation",
+                  child: FloatingActionButton.extended(
+                    isExtended: true,
+                    heroTag: null,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    onPressed: () {
+                      Get.to(
+                        () => const BookParkingPageRoute(),
+                        transition: Transition.fadeIn,
+                        curve: Curves.easeInOut,
+                        duration: const Duration(milliseconds: 500),
+                        preventDuplicates: true,
+                      );
+                    },
+                    label: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.directions_car_filled_rounded,
+                          size: _fabIconSize,
+                          color: Colors.white,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          "PARK",
+                          style: TextStyle(
+                              fontSize: _fabTextSize, color: Colors.white),
+                        ),
+                      ],
+                    ),
                   ),
-                  SizedBox(width: 10),
-                  Text(
-                    "PARK",
-                    style: TextStyle(fontSize: _fabTextSize),
+                )
+              : FloatingActionButton.extended(
+                  isExtended: true,
+                  heroTag: "fab_hero_money_animation",
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                ],
-              ),
-            ),
-          ),
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  onPressed: () {
+                    Get.to(
+                      () => const AddMoneyPageRoute(),
+                      transition: Transition.fadeIn,
+                      curve: Curves.easeOut,
+                      duration: const Duration(milliseconds: 500),
+                      preventDuplicates: true,
+                    );
+                  },
+                  label: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.add_rounded,
+                        size: _fabIconSize,
+                        color: Colors.white,
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        "MONEY",
+                        style: TextStyle(
+                          fontSize: _fabTextSize,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
         ),
       ),
     );

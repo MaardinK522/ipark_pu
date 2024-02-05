@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:get/get.dart';
@@ -8,11 +10,6 @@ class Bluetooth extends GetxController {
 
   static Future<BluetoothConnection?> scanAndConnectDevice() async {
     debugPrint("Connecting...");
-    // if (_connection == null) {
-    //   String sensorAddress = "00:22:09:01:0A:A4";
-    //   _connection = await BluetoothConnection.toAddress(sensorAddress);
-    //   return Future.value(_connection);
-    // }
     if (await Permission.bluetoothScan.request().isGranted) {
       if (await Permission.bluetoothConnect.request().isGranted) {
         if (_connection == null) {
@@ -24,5 +21,9 @@ class Bluetooth extends GetxController {
       }
     }
     return Future.value(_connection);
+  }
+
+  static void writeData(int index) async {
+    _connection?.output.add(ascii.encode("$index"));
   }
 }

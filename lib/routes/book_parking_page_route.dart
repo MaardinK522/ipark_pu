@@ -1,10 +1,13 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:ipark/main.dart';
 import 'package:flutter_material_pickers/flutter_material_pickers.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:ipark/routes/parking_slot_booked_page_route.dart';
+import 'package:ipark/utils/bluetooth.dart';
 
 class BookParkingPageRoute extends StatefulWidget {
   const BookParkingPageRoute({super.key});
@@ -19,7 +22,6 @@ class _BookParkingPageRouteState extends State<BookParkingPageRoute> {
   int itemCount = 0;
   String selectedParkingSlot = "";
   Set<int> uniqueNumbers = <int>{};
-  List<String> randomParkingSlots = List.empty(growable: true);
   int parkingTime = 1;
 
   @override
@@ -35,8 +37,7 @@ class _BookParkingPageRouteState extends State<BookParkingPageRoute> {
     //   }
     // }
     // randomParkingSlots.sort();
-    randomParkingSlots.add("3");
-    randomParkingSlots.add("4 (Booked)");
+
     selectedParkingSlot = randomParkingSlots[0];
   }
 
@@ -79,6 +80,7 @@ class _BookParkingPageRouteState extends State<BookParkingPageRoute> {
           ),
         ),
         elevation: 0,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         centerTitle: true,
         title: Hero(
           tag: "app_name_hero_animation",
@@ -395,27 +397,37 @@ class _BookParkingPageRouteState extends State<BookParkingPageRoute> {
                         elevation: const MaterialStatePropertyAll(1),
                       ),
                       onPressed: () async {
-                        // TODO: fix loading dialog
-                        Get.dialog(
-                          bookingSlotDialog,
-                          barrierDismissible: false,
-                        );
-                        await Future.delayed(const Duration(seconds: 5));
-                        Get.back();
-                        GetStorage().write(
-                          'wallet_money',
-                          GetStorage().read('wallet_money') -
-                              (parkingTime * 10),
-                        );
-                        Get.offAll(
-                          () => ParkingSlotBookedPageRoute(
-                            bookParkingSlot: int.parse(selectedParkingSlot),
-                            parkingTime: parkingTime,
-                          ),
-                          transition: Transition.circularReveal,
-                          curve: Curves.easeOut,
-                          duration: const Duration(milliseconds: 500),
-                        );
+                        if (selectedParkingSlot.length == 1) {
+                          Get.dialog(
+                            bookingSlotDialog,
+                            barrierDismissible: false,
+                          );
+                          await Future.delayed(const Duration(seconds: 5));
+                          Get.back();
+                          GetStorage().write(
+                            'wallet_money',
+                            GetStorage().read('wallet_money') -
+                                (parkingTime * 10),
+                          );
+                          int index = 0;
+                          for (int a = 0; a < randomParkingSlots.length; a++) {
+                            if (randomParkingSlots[a] == selectedParkingSlot) {
+                              index = a;
+                            }
+                          }
+                          Bluetooth.writeData(index);
+                          randomParkingSlots[index] =
+                              "$selectedParkingSlot (Parked)";
+                          Get.offAll(
+                            () => ParkingSlotBookedPageRoute(
+                              bookParkingSlot: int.parse(selectedParkingSlot),
+                              parkingTime: parkingTime,
+                            ),
+                            transition: Transition.circularReveal,
+                            curve: Curves.easeOut,
+                            duration: const Duration(milliseconds: 500),
+                          );
+                        }
                       },
                       child: const SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
