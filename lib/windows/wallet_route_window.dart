@@ -113,7 +113,7 @@ class _WalletRouteWindowState extends State<WalletRouteWindow> {
                         width: deviceWidth,
                         child: CircularProgressIndicator(
                           strokeCap: StrokeCap.round,
-                          value: walletMoney / perHourRate,
+                          value: (walletMoney / perHourRate) / 10,
                           strokeWidth: 10,
                           color: Theme.of(context).colorScheme.primary,
                         ),

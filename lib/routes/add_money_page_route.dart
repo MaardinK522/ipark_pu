@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:ipark/pageview_items/wallet_money_price_pageview_item.dart';
+import 'package:ipark/routes/coupon_added_to_walled_page_route.dart';
 
 class AddMoneyPageRoute extends StatefulWidget {
   const AddMoneyPageRoute({super.key});
@@ -158,6 +159,7 @@ class _AddMoneyPageRouteState extends State<AddMoneyPageRoute> {
                                             ],
                                           ),
                                         ),
+                                        barrierDismissible: false,
                                       );
                                       await Future.delayed(
                                         const Duration(seconds: 2),
@@ -278,52 +280,106 @@ class _AddMoneyPageRouteState extends State<AddMoneyPageRoute> {
                           actionsAlignment: MainAxisAlignment.spaceAround,
                           actionsOverflowAlignment: OverflowBarAlignment.center,
                           actions: [
-                            Expanded(
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Get.back();
-                                },
-                                style: ButtonStyle(
-                                  shape: MaterialStatePropertyAll(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
+                            ElevatedButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                              style: ButtonStyle(
+                                shape: MaterialStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
                                   ),
                                 ),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(20),
-                                  child: Text(
-                                    "NO",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                    ),
+                              ),
+                              child: const Padding(
+                                padding: EdgeInsets.all(20),
+                                child: Text(
+                                  "NO",
+                                  style: TextStyle(
+                                    fontSize: 20,
                                   ),
                                 ),
                               ),
                             ),
-                            Expanded(
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                  shape: MaterialStatePropertyAll(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
+                            ElevatedButton(
+                              style: ButtonStyle(
+                                shape: MaterialStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
                                   ),
                                 ),
-                                onPressed: () {},
-                                child: const Padding(
-                                  padding: EdgeInsets.all(20),
-                                  child: Text(
-                                    "YES",
-                                    style: TextStyle(
-                                      fontSize: 20,
+                              ),
+                              onPressed: () async {
+                                Get.back();
+                                GetStorage().write(
+                                  'wallet_money',
+                                  GetStorage().read('wallet_money') +
+                                      parkingPrices[selectedIndex],
+                                );
+                                Get.dialog(
+                                  AlertDialog(
+                                    actionsPadding: const EdgeInsets.all(20),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
                                     ),
+                                    title: Text(
+                                      "Adding parking coupon in your account of \u{20B9} ${parkingPrices[selectedIndex]}",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    titleTextStyle: TextStyle(
+                                      fontSize: 20,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                    content: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        const SizedBox(
+                                          height: 100,
+                                          width: 100,
+                                          child: CircularProgressIndicator(),
+                                        ),
+                                        const SizedBox(height: 20),
+                                        Text(
+                                          "Loading...",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  barrierDismissible: false,
+                                );
+                                await Future.delayed(
+                                  const Duration(seconds: 3),
+                                  () {
+                                    Get.off(
+                                      () => CouponAddedToWalletPageRoute(
+                                        couponPrice:
+                                            parkingPrices[selectedIndex],
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.all(20),
+                                child: Text(
+                                  "YES",
+                                  style: TextStyle(
+                                    fontSize: 20,
                                   ),
                                 ),
                               ),
                             ),
                           ],
                         ),
+                        barrierDismissible: false,
                       );
                     },
                     child: const SingleChildScrollView(

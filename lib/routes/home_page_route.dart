@@ -135,9 +135,10 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               Get.to(
                 () => const AddMoneyPageRoute(),
-                transition: Transition.downToUp,
+                transition: Transition.fadeIn,
                 curve: Curves.easeOut,
                 duration: const Duration(milliseconds: 500),
+                preventDuplicates: true,
               );
             },
             label: const Row(
@@ -167,9 +168,10 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 Get.to(
                   () => const BookParkingPageRoute(),
-                  transition: Transition.downToUp,
-                  curve: Curves.easeOut,
+                  transition: Transition.fadeIn,
+                  curve: Curves.easeInOut,
                   duration: const Duration(milliseconds: 500),
+                  preventDuplicates: true,
                 );
               },
               label: const Row(

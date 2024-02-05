@@ -16,6 +16,9 @@ dependencies:
   get_storage: 2.1.1
   percent_indicator: 4.2.3
   flutter_countdown_timer: 4.1.0
+  flutter_bluetooth_serial:
+  permission_handler:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_pickers/flutter_material_pickers.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:ipark/routes/parking_slot_booked_page_route.dart';
 
 class BookParkingPageRoute extends StatefulWidget {
@@ -16,9 +17,9 @@ class _BookParkingPageRouteState extends State<BookParkingPageRoute> {
   final max = 20;
   final min = 1;
   int itemCount = 0;
-  int selectedParkingSlot = 0;
+  String selectedParkingSlot = "";
   Set<int> uniqueNumbers = <int>{};
-  List<int> randomParkingSlots = List.empty(growable: true);
+  List<String> randomParkingSlots = List.empty(growable: true);
   int parkingTime = 1;
 
   @override
@@ -26,14 +27,16 @@ class _BookParkingPageRouteState extends State<BookParkingPageRoute> {
     super.initState();
     Random rand = Random();
     itemCount = rand.nextInt(15);
-    while (uniqueNumbers.length <= itemCount) {
-      int randomNumber = min + rand.nextInt(max - min + 1);
-      if (uniqueNumbers.add(randomNumber)) {
-        // If the number was added to the set (i.e., it's unique), add it to the list.
-        randomParkingSlots.add(randomNumber);
-      }
-    }
-    randomParkingSlots.sort();
+    // while (uniqueNumbers.length <= itemCount) {
+    //   int randomNumber = min + rand.nextInt(max - min + 1);
+    //   if (uniqueNumbers.add(randomNumber)) {
+    //     // If the number was added to the set (i.e., it's unique), add it to the list.
+    //     randomParkingSlots.add(randomNumber);
+    //   }
+    // }
+    // randomParkingSlots.sort();
+    randomParkingSlots.add("3");
+    randomParkingSlots.add("4 (Booked)");
     selectedParkingSlot = randomParkingSlots[0];
   }
 
@@ -120,12 +123,15 @@ class _BookParkingPageRouteState extends State<BookParkingPageRoute> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text(
-                          "Selected parking slot :",
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Theme.of(context).colorScheme.primary),
+                        Material(
+                          color: Colors.transparent,
+                          child: Text(
+                            "Selected parking slot :",
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Theme.of(context).colorScheme.primary),
+                          ),
                         ),
                         const SizedBox(height: 20),
                         Material(
@@ -133,39 +139,42 @@ class _BookParkingPageRouteState extends State<BookParkingPageRoute> {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              InkWell(
-                                onTap: () {
-                                  int itemIndex = randomParkingSlots
-                                      .indexOf(selectedParkingSlot);
-                                  if (itemIndex > 0) {
-                                    itemIndex--;
-                                  } else {
-                                    itemIndex = randomParkingSlots.length - 1;
-                                  }
-                                  setState(() {
-                                    selectedParkingSlot =
-                                        randomParkingSlots[itemIndex];
-                                  });
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
-                                      width: 2,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                    ),
-                                  ),
-                                  child: SizedBox(
-                                    height: 100,
-                                    width: 100,
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.keyboard_arrow_left_rounded,
-                                        size: 50,
+                              Expanded(
+                                child: InkWell(
+                                  onTap: () {
+                                    int itemIndex = randomParkingSlots
+                                        .indexOf(selectedParkingSlot);
+                                    if (itemIndex > 0) {
+                                      itemIndex--;
+                                    } else {
+                                      itemIndex = randomParkingSlots.length - 1;
+                                    }
+                                    setState(() {
+                                      selectedParkingSlot =
+                                          randomParkingSlots[itemIndex];
+                                    });
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: Border.all(
+                                        width: 2,
                                         color: Theme.of(context)
                                             .colorScheme
                                             .primary,
+                                      ),
+                                    ),
+                                    child: SizedBox(
+                                      height: 100,
+                                      width: 100,
+                                      child: Center(
+                                        child: Icon(
+                                          Icons.keyboard_arrow_left_rounded,
+                                          size: 50,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -180,7 +189,7 @@ class _BookParkingPageRouteState extends State<BookParkingPageRoute> {
                                     .primaryContainer,
                                 borderRadius: BorderRadius.circular(20),
                                 onTap: () {
-                                  showMaterialScrollPicker<int>(
+                                  showMaterialScrollPicker<String>(
                                     context: context,
                                     title: "Select a parking slot",
                                     items: randomParkingSlots,
@@ -297,14 +306,19 @@ class _BookParkingPageRouteState extends State<BookParkingPageRoute> {
                             ],
                           ),
                         ),
+                        const SizedBox(height: 20),
                         const Expanded(child: Center()),
-                        Text(
-                          "Note : Tap on parking\nslot number to see available slots",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color:
-                                Theme.of(context).colorScheme.primaryContainer,
-                            fontSize: 15,
+                        Material(
+                          color: Colors.transparent,
+                          child: Text(
+                            "Note : Tap on parking\nslot number to see available slots",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
+                              fontSize: 15,
+                            ),
                           ),
                         )
                       ],
@@ -388,9 +402,15 @@ class _BookParkingPageRouteState extends State<BookParkingPageRoute> {
                         );
                         await Future.delayed(const Duration(seconds: 5));
                         Get.back();
-                        Get.to(
+                        GetStorage().write(
+                          'wallet_money',
+                          GetStorage().read('wallet_money') -
+                              (parkingTime * 10),
+                        );
+                        Get.offAll(
                           () => ParkingSlotBookedPageRoute(
-                            bookParkingSlot: selectedParkingSlot,
+                            bookParkingSlot: int.parse(selectedParkingSlot),
+                            parkingTime: parkingTime,
                           ),
                           transition: Transition.circularReveal,
                           curve: Curves.easeOut,
